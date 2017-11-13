@@ -14,11 +14,11 @@ class Driver {
         User stu1 = admin.createUser("Stu1");
         UserGroup cs356 = admin.createUserGroup("CS356");
         UserGroup cs356s1 = admin.createUserGroup("CS356s1");
-        admin.addComponent(john);
-        admin.addComponent(bob);
-        admin.addComponent(steve);
-        admin.addComponent(cs356);
-        admin.addComponent(cs356s1);
+//        admin.addComponent(john);
+//        admin.addComponent(bob);
+//        admin.addComponent(steve);
+//        admin.addComponent(cs356);
+//        admin.addComponent(cs356s1);
         cs356.add(john);
         cs356.add(stu1);
         john.addFollower(bob);

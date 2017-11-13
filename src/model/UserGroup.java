@@ -39,19 +39,26 @@ public class UserGroup implements Component{
     }
 
     @Override
-    public void add(Component c) {
+    public boolean add(Component c) {
+        System.out.println("Adding");
         if(c instanceof User) {
+            System.out.println("Adding User");
             User user = (User)c;
             if(user.getGroup() == null) {
                 components.add(user);
                 user.setGroup(this);
+                CountVisitor.getInstance().visitUser();
+                return true;
             }
             else {
                 System.out.println("A user can only be included in 1 group.");
+                return false;
             }
-        }
-        else {
+        } else {
+            System.out.println("Adding Group");
             components.add(c);
+            CountVisitor.getInstance().visitUserGroup();
+            return true;
         }
     }
     

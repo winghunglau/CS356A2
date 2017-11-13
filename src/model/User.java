@@ -47,8 +47,9 @@ public class User implements Component, Observer{
     }
 
     @Override
-    public void add(Component c) {
+    public boolean add(Component c) {
         System.out.println("Cannot add another user to User.");
+        return false;
     }
 
     @Override

@@ -12,6 +12,6 @@ public interface Component {
     public int getID();
     public List<Component> getComponents();
 
-    public void add(Component c);
+    public boolean add(Component c);
 	
 }

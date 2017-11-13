@@ -4,19 +4,34 @@
  * and open the template in the editor.
  */
 package view;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import model.*;
 
 public class UserFrame extends javax.swing.JFrame {
     DefaultListModel userList = new DefaultListModel<String>();
     DefaultListModel tweetList = new DefaultListModel<String>();
-
+    AdminControl admin = AdminControl.getInstance();
+    User user;
     /**
      * Creates new form UserFrame
      */
     public UserFrame(User user) {
         super();
+        this.user = user;
         initComponents();
+        userID.setText("");
+        List<Integer> followings = user.getFollowings();
+        for (int id: followings) {
+            if (id != user.getID()) {
+                userList.addElement(admin.getComponentByID(id));
+            }
+        }
+        
+        for (Tweet t : user.getTweets()) {
+            tweetList.addElement(t);
+        }
     }
 
     /**
@@ -139,12 +154,19 @@ public class UserFrame extends javax.swing.JFrame {
 
     private void followUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_followUserMouseClicked
         System.out.println("followUserMouseClicked");
-        userList.addElement(userID.getText());
+        Component c = admin.getComponentByName(userID.getText());
+        if (c instanceof User) {
+            User user = (User)c;
+            this.user.follow(user.getID());
+            userList.addElement(c);
+        }
     }//GEN-LAST:event_followUserMouseClicked
 
     private void postTweetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_postTweetMouseClicked
         System.out.println("postTweetMouseClicked");
-        tweetList.addElement(tweetMessage.getText());
+        Tweet tweet = new Tweet(tweetMessage.getText(), user);
+        user.publish(tweet);
+        tweetList.addElement(tweet);
     }//GEN-LAST:event_postTweetMouseClicked
 
 

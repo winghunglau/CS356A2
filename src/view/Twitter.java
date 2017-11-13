@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JTree;
 import model.AdminControl;
+import model.Component;
 import model.User;
 import model.UserGroup;
 
@@ -262,34 +263,60 @@ public class Twitter extends javax.swing.JFrame {
 
     private void addUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addUserMouseClicked
         System.out.println("addUserMouseClicked");
-        User user = admin.createUser(userID.getText());
-        
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
         if (node == null) {
-            root.add(new DefaultMutableTreeNode(user.toString()));
-        } else {
-            node.add(new DefaultMutableTreeNode(user.toString()));
+            User user = admin.createUser(userID.getText());
+            if (admin.getRoot().add(user)) {
+                root.add(new DefaultMutableTreeNode(user.toString()));
+                reloadTree();
+            }
+            return;
         }
-        reloadTree();
+        String name = node.toString();
+        Component c = admin.getComponentByName(name);
+        if (c == null) {
+            return;
+        }
+        User user = admin.createUser(userID.getText());
+        if (c.add(user)) {
+            node.add(new DefaultMutableTreeNode(user.toString()));
+            reloadTree();
+        }
     }//GEN-LAST:event_addUserMouseClicked
 
     private void addGroupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addGroupMouseClicked
         System.out.println("addGroupMouseClicked");
         UserGroup group = admin.createUserGroup(groupID.getText());
-        
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
         if (node == null) {
-            root.add(new DefaultMutableTreeNode(group.toString()));
-        } else {
-            node.add(new DefaultMutableTreeNode(group.toString()));
+            if (admin.getRoot().add(group)) {
+                root.add(new DefaultMutableTreeNode(group.toString()));
+                reloadTree();
+            }
+            return;
         }
-        reloadTree();
+        String name = node.toString();
+        Component c = admin.getComponentByName(name);
+        if (c == null) {
+            return;
+        }
+        if (c.add(group)) {
+            node.add(new DefaultMutableTreeNode(group.toString()));
+            reloadTree();
+        }
     }//GEN-LAST:event_addGroupMouseClicked
 
     private void openUserViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_openUserViewMouseClicked
         System.out.println("openUserViewMouseClicked");
-        UserFrame uf = new UserFrame(admin.createUser(userID.getText()));
-        uf.setVisible(true);
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+        System.out.println("open selected user:" + node.toString());
+        Component c = admin.getComponentByName(node.toString());
+        if (c instanceof User) {
+            User user = (User) c;
+            System.out.println("found:" + user.toString());
+            UserFrame uf = new UserFrame(user);
+            uf.setVisible(true);
+        }
     }//GEN-LAST:event_openUserViewMouseClicked
 
     private void showUserTotalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showUserTotalMouseClicked

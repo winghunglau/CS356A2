@@ -33,5 +33,9 @@ public class Tweet {
     public User getAuthor() {
         return author;
     }
-	
+
+    @Override
+    public String toString() {
+        return tweet + " - by " + author;
+    }
 }
