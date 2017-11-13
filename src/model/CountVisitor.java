@@ -51,6 +51,6 @@ public class CountVisitor implements ElementVisitor {
     }
 
     public int getPosTweetCount() {
-        return posTweetCount;
+        return 100 * posTweetCount / tweetCount;
     }
 }

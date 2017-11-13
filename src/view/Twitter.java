@@ -6,27 +6,62 @@
 package view;
 
 import javax.swing.JOptionPane;
-import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeModel;
+import javax.swing.JTree;
 import model.AdminControl;
-import model.Tweet;
 import model.User;
 import model.UserGroup;
 
 public class Twitter extends javax.swing.JFrame {
     AdminControl admin = AdminControl.getInstance();
+    DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
+    private JTree tree;
     /**
      * Creates new form Twitter
      */
     public Twitter() {
         initComponents();
+        reloadTree();
     }
     
-    public TreeModel getRoot() {
-        return admin.getRoot();
+    public void reloadTree() {
+        if (tree != null) {
+            tree.setVisible(false);
+        }
+        //create the tree by passing in the root node
+        tree = new JTree(root);
+        tree.setSize(228, 397);
+        tree.setVisible(true);
+        expandAllNodes();
+        userPanel.add(tree);
+    }
+    
+    private void expandAllNodes() {
+        int j = tree.getRowCount();
+        int i = 0;
+        while(i < j) {
+            tree.expandRow(i);
+            i += 1;
+            j = tree.getRowCount();
+        }
     }
 
+    private DefaultMutableTreeNode buildTree() {
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
+        //create the child nodes
+        DefaultMutableTreeNode vegetableNode = new DefaultMutableTreeNode("Vegetables");
+        DefaultMutableTreeNode fruitNode = new DefaultMutableTreeNode("Fruits");
+        //add the child nodes to the root node
+        root.add(vegetableNode);
+        root.add(fruitNode);
+
+        DefaultMutableTreeNode wing = new DefaultMutableTreeNode("Wing");
+        root.add(wing);
+        wing.add(vegetableNode);
+        return root;
+    }
+
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,8 +72,6 @@ public class Twitter extends javax.swing.JFrame {
     private void initComponents() {
 
         userPanel = new javax.swing.JPanel();
-        userScrollPane = new javax.swing.JScrollPane();
-        userTree = new javax.swing.JTree();
         menuPanel = new javax.swing.JPanel();
         addUser = new javax.swing.JButton();
         addGroup = new javax.swing.JButton();
@@ -52,20 +85,15 @@ public class Twitter extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        userTree.setModel(getRoot());
-        userScrollPane.setViewportView(userTree);
-
         javax.swing.GroupLayout userPanelLayout = new javax.swing.GroupLayout(userPanel);
         userPanel.setLayout(userPanelLayout);
         userPanelLayout.setHorizontalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(userPanelLayout.createSequentialGroup()
-                .addComponent(userScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 228, Short.MAX_VALUE)
         );
         userPanelLayout.setVerticalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(userScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
+            .addGap(0, 397, Short.MAX_VALUE)
         );
 
         addUser.setText("Add User");
@@ -235,15 +263,27 @@ public class Twitter extends javax.swing.JFrame {
     private void addUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addUserMouseClicked
         System.out.println("addUserMouseClicked");
         User user = admin.createUser(userID.getText());
-        UserGroup ug = (UserGroup) getRoot();
-        ug.add(user);
+        
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+        if (node == null) {
+            root.add(new DefaultMutableTreeNode(user.toString()));
+        } else {
+            node.add(new DefaultMutableTreeNode(user.toString()));
+        }
+        reloadTree();
     }//GEN-LAST:event_addUserMouseClicked
 
     private void addGroupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addGroupMouseClicked
         System.out.println("addGroupMouseClicked");
         UserGroup group = admin.createUserGroup(groupID.getText());
-        UserGroup ug = (UserGroup) getRoot();
-        ug.add(group);
+        
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+        if (node == null) {
+            root.add(new DefaultMutableTreeNode(group.toString()));
+        } else {
+            node.add(new DefaultMutableTreeNode(group.toString()));
+        }
+        reloadTree();
     }//GEN-LAST:event_addGroupMouseClicked
 
     private void openUserViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_openUserViewMouseClicked
@@ -271,31 +311,7 @@ public class Twitter extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        
-    
-//        admin.addComponent(john);
-//        admin.addComponent(bob);
-//        admin.addComponent(steve);
-//        admin.addComponent(cs356);
-//        admin.addComponent(cs356s1);
-//        cs356.add(john);
-//        cs356.add(stu1);
-//        john.addFollower(bob);
-//        john.addFollower(steve);
-//        john.publish(new Tweet("First Tweet", john));
-//        System.out.print("John's window: ");
-//        john.display();
-//        System.out.print("Bob's window: ");
-//        bob.display();
-//        System.out.print("Steve's window: ");
-//        steve.display();
-//        
-        
-        
-        
-        
-        
+    public static void main(String args[]) {        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -339,7 +355,5 @@ public class Twitter extends javax.swing.JFrame {
     private javax.swing.JButton showUserTotal;
     private javax.swing.JTextField userID;
     private javax.swing.JPanel userPanel;
-    private javax.swing.JScrollPane userScrollPane;
-    private javax.swing.JTree userTree;
     // End of variables declaration//GEN-END:variables
 }
