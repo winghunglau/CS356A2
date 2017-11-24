@@ -8,11 +8,11 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 /**
- * This is the User class.
- * It includes all the information and actions of a user.
+ * This is the User class. It includes all the information and actions of a
+ * user.
  */
-public class User implements Component, Observer{
-	
+public class User implements Component, Observer {
+
     private int id;
     private String name;
     private List<Integer> followers;
@@ -20,6 +20,9 @@ public class User implements Component, Observer{
     private List<Tweet> tweets;
     private UserGroup group;
     private NewsFeed newsFeed;
+    private long createdTime;
+    private long lastUpdatedTime;
+    private static User lastestUpdatedUser;
 
     public User(int id, String name) {
         this.id = id;
@@ -29,9 +32,13 @@ public class User implements Component, Observer{
         tweets = new ArrayList<Tweet>();
         newsFeed = new NewsFeed();
         addFollower(this);
+        createdTime = System.currentTimeMillis();
+        System.out.println("User Created : " + new Date(createdTime));
+        lastUpdatedTime = System.currentTimeMillis();
+        lastestUpdatedUser = this;
     }
 
-    @Override 
+    @Override
     public String getName() {
         return name;
     }
@@ -55,6 +62,22 @@ public class User implements Component, Observer{
     @Override
     public void update(Tweet tweet) {
         tweets.add(tweet);
+        lastUpdatedTime = System.currentTimeMillis();
+        System.out.println("Last Updated: " + new Date(lastUpdatedTime));
+        lastestUpdatedUser = this;
+        System.out.println("Lastest Updated: " + this);
+    }
+
+    public static User getLastestUpdatedUser() {
+        return lastestUpdatedUser;
+    }
+
+    public long getCreatedTime() {
+        return createdTime;
+    }
+
+    public long getLastUpdatedTime() {
+        return lastUpdatedTime;
     }
 
     public List<Integer> getFollowers() {
@@ -92,7 +115,7 @@ public class User implements Component, Observer{
     }
 
     public void display() {
-        for(Tweet t : tweets) {
+        for (Tweet t : tweets) {
             System.out.println(t.getAuthor().getName() + " : " + t.getTweet());
         }
     }

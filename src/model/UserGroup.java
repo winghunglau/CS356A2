@@ -16,11 +16,19 @@ public class UserGroup implements Component{
     private int groupID;
     private String groupName;
     private List<Component> components;
+    private long createdTime;
+
 
     public UserGroup(int id, String name) {
         groupID = id;
         groupName = name;
         components = new ArrayList<Component>();
+        createdTime = System.currentTimeMillis();
+        System.out.println("Group Created : " + new Date(createdTime));
+    }
+    
+    public long getCreatedTime() {
+        return createdTime;
     }
     
     @Override 

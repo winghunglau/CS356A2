@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * This is the AdminControl class.
@@ -32,6 +33,10 @@ public class AdminControl {
 
     public UserGroup getRoot() {
         return root;
+    }
+    
+    public Set<String> getNames() {
+        return nameMap.keySet();
     }
 
     public User createUser(String name) {

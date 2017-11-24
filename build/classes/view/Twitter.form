@@ -43,7 +43,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="228" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="268" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -61,22 +61,26 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="groupID" min="-2" pref="120" max="-2" attributes="0"/>
-                              <Component id="userID" min="-2" pref="120" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="addGroup" max="32767" attributes="0"/>
-                              <Component id="addUser" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
                       <Component id="openUserView" alignment="0" max="32767" attributes="0"/>
                       <Component id="showUserTotal" alignment="0" max="32767" attributes="0"/>
                       <Component id="showGroupTotal" alignment="0" max="32767" attributes="0"/>
                       <Component id="showMessageTotal" alignment="0" max="32767" attributes="0"/>
                       <Component id="showPositivePercentage" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="groupID" pref="120" max="32767" attributes="0"/>
+                              <Component id="userID" pref="120" max="32767" attributes="0"/>
+                              <Component id="validationButton" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="addGroup" max="32767" attributes="0"/>
+                                  <Component id="addUser" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="lastUpdateButton" alignment="0" min="-2" pref="118" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -95,17 +99,22 @@
                       <Component id="groupID" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="addGroup" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                  <Component id="openUserView" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="validationButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lastUpdateButton" alignment="3" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="openUserView" pref="45" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="showUserTotal" max="32767" attributes="0"/>
+                  <Component id="showUserTotal" pref="45" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="showGroupTotal" max="32767" attributes="0"/>
+                  <Component id="showGroupTotal" pref="45" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="showMessageTotal" max="32767" attributes="0"/>
+                  <Component id="showMessageTotal" pref="45" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="showPositivePercentage" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Component id="showPositivePercentage" pref="49" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -189,6 +198,22 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Group ID"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="validationButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Validation"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="validationButtonMouseClicked"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="lastUpdateButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Last Update"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lastUpdateButtonMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
